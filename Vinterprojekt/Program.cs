@@ -1,11 +1,13 @@
 ﻿using Raylib_cs;
 
-bool menu = false, start = true;
-Color playColor = Color.BLUE, exitColor = Color.BLUE;
+bool menu = false, start = true; // Bools för att ladda in menyn eller själva spelet
+Color playColor = Color.BLUE, exitColor = Color.BLUE; // Variabler för knapparnas färg (underlättar för att göra "hover" effekten)
 
+//Skapar ett fönster
 Raylib.InitWindow(1280, 720, "Breakout");
 Raylib.SetTargetFPS(60);
 
+// Laddar in menyn eller spelet beroende på vilken bool som är sann / falsk.
 if(menu)
 {
     MainMenu();
@@ -17,6 +19,7 @@ if(start)
 
 void MainMenu() 
 {
+    //Knapparna
     Rectangle play = new Rectangle(Raylib.GetScreenWidth() / 2 - 160,  350, 300, 100);
     Rectangle exit = new Rectangle(Raylib.GetScreenWidth() / 2 - 160, 500, 300, 100);
 
@@ -35,9 +38,12 @@ void MainMenu()
 
         Raylib.EndDrawing();
         
+        // Kollar om muspekaren är på en knapp och ändrar färgen om den är på en knapp
         if (Raylib.GetMouseX() >= Raylib.GetScreenWidth() / 2 - 160 && Raylib.GetMouseX() <= Raylib.GetScreenWidth() / 2 + 140 && Raylib.GetMouseY() >= 350 && Raylib.GetMouseY() <= 450)
         {
             playColor = Color.DARKBLUE;
+
+            //Laddar in spelet om man klickar på "start" knappen
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 start = true;
@@ -52,6 +58,8 @@ void MainMenu()
         if (Raylib.GetMouseX() >= Raylib.GetScreenWidth() / 2 - 160 && Raylib.GetMouseX() <= Raylib.GetScreenWidth() / 2 + 140 && Raylib.GetMouseY() >= 500 && Raylib.GetMouseY() <= 600)
         {
             exitColor = Color.DARKBLUE;
+
+            // Stänger ner spelet om man trycker på "exit knappen"
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
                 Raylib.CloseWindow();
