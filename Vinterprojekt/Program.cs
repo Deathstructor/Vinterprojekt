@@ -14,7 +14,7 @@ if(menu)
 }
 if(start)
 {
-    Game.runGame();
+    Game.RunGame();
 }
 
 void MainMenu() 
