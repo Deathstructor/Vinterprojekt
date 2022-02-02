@@ -12,10 +12,22 @@ public class Game
         float ballSpeedX = 3, ballSpeedY = -3;  // Bollens hastighet och riktning
         bool start = false; // Bool som säger att spelet har startat - används för att inte loopa en if sats
         Random rdm = new Random(); // Slumpgenerator
+        Block[,] b = new Block[17, 10];
+
+
+
+        for (var i = 0; i < b.GetLength(0); i++)
+        {
+            for (var j = 0; j < b.GetLength(1); j++)
+            {
+                b[i, j] = new Block(i * Raylib.GetScreenWidth() / 20 + 100, j * Raylib.GetScreenHeight() / 20 + 25);
+            }
+        }
+
+        
 
         while (!Raylib.WindowShouldClose())
         {
-
             Raylib.BeginDrawing();
 
             // Ritar ut spelaren
@@ -25,7 +37,26 @@ public class Game
             // Ritar ut bollen
             Raylib.DrawCircle(ballPosX, ballPosY, 15, Color.WHITE);
 
+            // Ritar ut block
+            for (var i = 0; i < b.GetLength(0); i++)
+            {
+                for (var j = 0; j < b.GetLength(1); j++)
+                {
+                    b[i, j].Display();
+                }
+            }
+
             Raylib.EndDrawing();
+
+
+            // Kollar om bollen kolliderar med blocken
+            for (var i = 0; i < b.GetLength(0); i++)
+            {
+                for (var j = 0; j < b.GetLength(1); j++)
+                {
+                    (ballSpeedX, ballSpeedY) = b[i, j].Collision(ballPosX, ballPosY, 15, ((int) ballSpeedX,  (int) ballSpeedY));
+                }
+            }
 
 
 
@@ -59,7 +90,7 @@ public class Game
             {
                 ballSpeedX *= -1;
             }
-            if (ballPosY <= 15 || ballPosX >= playerPos && ballPosX <= playerPos + 160 && ballPosY >= 635)
+            if (ballPosY <= 15 || ballPosX >= playerPos && ballPosX <= playerPos + 160 && ballPosY >= 635 && ballPosY <= 685)
             {
                 ballSpeedY *= -1;
             }
