@@ -14,6 +14,11 @@ public class Game
         Random rdm = new Random(); // Slumpgenerator
         Block[,] b = new Block[17, 10];
 
+        // Vector2 position;
+        // Vector2 movement;
+
+        // position += movement;
+
 
 
         for (var i = 0; i < b.GetLength(0); i++)
@@ -24,7 +29,7 @@ public class Game
             }
         }
 
-        
+
 
         while (!Raylib.WindowShouldClose())
         {
@@ -54,7 +59,17 @@ public class Game
             {
                 for (var j = 0; j < b.GetLength(1); j++)
                 {
-                    (ballSpeedX, ballSpeedY) = b[i, j].Collision(ballPosX, ballPosY, 15, ((int) ballSpeedX,  (int) ballSpeedY));
+                    // (ballSpeedX, ballSpeedY) = b[i, j].Collision(ballPosX, ballPosY, 15, ((int) ballSpeedX,  (int) ballSpeedY));
+                    Block block = b[i, j];
+                    int c = block.Collision2(ballPosX, ballPosY, 15);
+                    if (c < 0) // horizontal
+                    {
+                        ballSpeedX = -ballSpeedX;
+                    }
+                    else if (c > 0) // vertical
+                    {
+                        ballSpeedY = -ballSpeedY;
+                    }
                 }
             }
 
@@ -84,7 +99,7 @@ public class Game
                 ballSpeedX += v2.X; // Får bollen att åka åt det bestämda hållet
                 start = true;
             }
-            
+
             // Får bollen att att studsa om den når en kant, inklusive spelaren
             if (ballPosX >= Raylib.GetScreenWidth() - 15 || ballPosX <= 15)
             {
@@ -94,10 +109,10 @@ public class Game
             {
                 ballSpeedY *= -1;
             }
-            
+
             // Får bollen att röra på sig
-            ballPosY += (int) ballSpeedY;
-            ballPosX += (int) ballSpeedX;
+            ballPosY += (int)ballSpeedY;
+            ballPosX += (int)ballSpeedX;
         }
     }
 }

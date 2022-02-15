@@ -1,4 +1,5 @@
 using Raylib_cs;
+using System.Numerics;
 
 public class Block
 {
@@ -8,8 +9,11 @@ public class Block
     int h = 30;
     bool exist = true;
 
+    Rectangle rectangle;
+
     public Block(int x_, int y_)
     {
+        rectangle = new Rectangle(x_, y_, w, h);
         x = x_;
         y = y_;
     }
@@ -18,43 +22,24 @@ public class Block
     {
         if (exist)
         {
-            Raylib.DrawRectangle(x, y, w, h, Color.WHITE);
+            Raylib.DrawRectangleRec(rectangle, Color.WHITE);
         }
     }
 
-    public (int, int) Collision(int ballX, int ballY, int ballSize, (int, int) xy)
+    public int Collision2(int ballX, int ballY, int ballSize)
     {
-        if (exist)
+        if (!exist) return 0;
+
+        if (Raylib.CheckCollisionCircleRec(new Vector2(ballX, ballY), ballSize, rectangle))
         {
-            bool bottom = this.y + this.h >= ballY - ballSize,
-            top = this.y <= ballY + ballSize,
-            right = this.x + this.w >= ballX - ballSize,
-            left = this.x <= ballX + ballSize;
-
-            if (top && bottom && right && left)
+            exist = false;
+            if (ballX < rectangle.x || ballX > rectangle.x + rectangle.width)
             {
-                if (ballX < x || ballX > x + w)
-                {
-                    exist = false;
-                    return (xy.Item1 * -1, xy.Item2);
-                } else
-                {
-                    exist = false;
-                    return (xy.Item1, xy.Item2 * -1);
-                }
+                return -1;
             }
-
-            // if (right && left)
-            // {
-            //     exist = false;
-            //     return (xy.Item1 * -1, xy.Item2);
-            // } else if (bottom && top)
-            // {
-            //     exist = false;
-            //     return (xy.Item1, xy.Item2 * -1);
-            // }
+            return 1;
         }
 
-        return xy;
+        return 0;
     }
 }
