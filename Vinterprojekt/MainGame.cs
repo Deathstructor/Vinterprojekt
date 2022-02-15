@@ -59,9 +59,8 @@ public class Game
             {
                 for (var j = 0; j < b.GetLength(1); j++)
                 {
-                    // (ballSpeedX, ballSpeedY) = b[i, j].Collision(ballPosX, ballPosY, 15, ((int) ballSpeedX,  (int) ballSpeedY));
                     Block block = b[i, j];
-                    int c = block.Collision2(ballPosX, ballPosY, 15);
+                    int c = block.Collision(ballPosX, ballPosY, 15);
                     if (c < 0) // horizontal
                     {
                         ballSpeedX = -ballSpeedX;

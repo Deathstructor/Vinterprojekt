@@ -26,7 +26,7 @@ public class Block
         }
     }
 
-    public int Collision2(int ballX, int ballY, int ballSize)
+    public int Collision(int ballX, int ballY, int ballSize)
     {
         if (!exist) return 0;
 
