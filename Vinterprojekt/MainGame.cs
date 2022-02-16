@@ -9,7 +9,7 @@ public class Game
     {
         int playerPos = Raylib.GetScreenWidth() / 2 - 80; // Spelarens position
         int ballPosX = Raylib.GetScreenWidth() / 2, ballPosY = 634; // Bollens position
-        float ballSpeedX = 3, ballSpeedY = -3;  // Bollens hastighet och riktning
+        float ballSpeedX = 4, ballSpeedY = -4;  // Bollens hastighet och riktning
         bool start = false; // Bool som säger att spelet har startat - används för att inte loopa en if sats
         Random rdm = new Random(); // Slumpgenerator
         Block[,] b = new Block[17, 10];
@@ -53,7 +53,8 @@ public class Game
 
             Raylib.EndDrawing();
 
-
+            bool hasBouncedH = false;
+            bool hasBouncedV = false;
             // Kollar om bollen kolliderar med blocken
             for (var i = 0; i < b.GetLength(0); i++)
             {
@@ -61,13 +62,15 @@ public class Game
                 {
                     Block block = b[i, j];
                     int c = block.Collision(ballPosX, ballPosY, 15);
-                    if (c < 0) // horizontal
+                    if (c < 0 && !hasBouncedH) // horizontal
                     {
                         ballSpeedX = -ballSpeedX;
+                        hasBouncedH = true;
                     }
-                    else if (c > 0) // vertical
+                    else if (c > 0 && !hasBouncedV) // vertical
                     {
                         ballSpeedY = -ballSpeedY;
+                        hasBouncedV = true;
                     }
                 }
             }
@@ -77,11 +80,11 @@ public class Game
             // Kollar om man trycker på D, A, högerpil, eller vänsterpil och förflyttar spelaren om en av dessa är nedtryckt
             if (Raylib.IsKeyDown(KeyboardKey.KEY_A) && playerPos > 0 || Raylib.IsKeyDown(KeyboardKey.KEY_LEFT) && playerPos > 0)
             {
-                playerPos -= 5;
+                playerPos -= 7;
             }
             if (Raylib.IsKeyDown(KeyboardKey.KEY_D) && playerPos + 160 < Raylib.GetScreenWidth() || Raylib.IsKeyDown(KeyboardKey.KEY_RIGHT) && playerPos + 160 < Raylib.GetScreenWidth())
             {
-                playerPos += 5;
+                playerPos += 7;
             }
 
             // Slumpar en riktning som bollen ska åka åt när man startar rundan
@@ -107,6 +110,11 @@ public class Game
             if (ballPosY <= 15 || ballPosX >= playerPos && ballPosX <= playerPos + 160 && ballPosY >= 635 && ballPosY <= 685)
             {
                 ballSpeedY *= -1;
+            }
+            if (ballPosY <= Raylib.GetScreenHeight() + 15)
+            {
+                start = false;
+                end = true;
             }
 
             // Får bollen att röra på sig

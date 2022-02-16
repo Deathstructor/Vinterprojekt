@@ -1,6 +1,6 @@
 ﻿using Raylib_cs;
 
-bool menu = false, start = true; // Bools för att ladda in menyn eller själva spelet
+bool menu = false, begin = true, end = false; // Bools för att ladda in menyn eller själva spelet eller slutet av spelet
 Color playColor = Color.BLUE, exitColor = Color.BLUE; // Variabler för knapparnas färg (underlättar för att göra "hover" effekten)
 
 //Skapar ett fönster
@@ -12,9 +12,13 @@ if(menu)
 {
     MainMenu();
 }
-if(start)
+if(begin)
 {
     Game.RunGame();
+}
+if (end)
+{
+    GameOver.GameEnd();
 }
 
 void MainMenu() 
@@ -46,7 +50,7 @@ void MainMenu()
             //Laddar in spelet om man klickar på "start" knappen
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
-                start = true;
+                begin = true;
                 menu = false;
                 return;
             }
