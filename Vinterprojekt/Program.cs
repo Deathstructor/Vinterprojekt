@@ -1,22 +1,19 @@
 ﻿using Raylib_cs;
 
-bool menu = false, begin = true, end = false; // Bools för att ladda in menyn eller själva spelet eller slutet av spelet
-Color playColor = Color.BLUE, exitColor = Color.BLUE; // Variabler för knapparnas färg (underlättar för att göra "hover" effekten)
-
 //Skapar ett fönster
 Raylib.InitWindow(1280, 720, "Breakout");
 Raylib.SetTargetFPS(60);
 
 // Laddar in menyn eller spelet beroende på vilken bool som är sann / falsk.
-if(menu)
+if(vars.menu)
 {
     MainMenu();
 }
-if(begin)
+if(vars.begin)
 {
     Game.RunGame();
 }
-if (end)
+if (vars.end)
 {
     GameOver.GameEnd();
 }
@@ -34,10 +31,10 @@ void MainMenu()
         Raylib.ClearBackground(Color.BLACK);
         Raylib.DrawText("Breakout", Raylib.GetScreenWidth() / 2 - 240, 150, 100, Color.GREEN);
 
-        Raylib.DrawRectangleRec(play, playColor);
+        Raylib.DrawRectangleRec(play, vars.playColor);
         Raylib.DrawText("Start", Raylib.GetScreenWidth() / 2 - 80, 375, 50, Color.WHITE);
 
-        Raylib.DrawRectangleRec(exit, exitColor);
+        Raylib.DrawRectangleRec(exit, vars.exitColor);
         Raylib.DrawText("Exit", Raylib.GetScreenWidth() / 2 - 50, 525, 50, Color.WHITE);
 
         Raylib.EndDrawing();
@@ -45,23 +42,23 @@ void MainMenu()
         // Kollar om muspekaren är på en knapp och ändrar färgen om den är på en knapp
         if (Raylib.GetMouseX() >= Raylib.GetScreenWidth() / 2 - 160 && Raylib.GetMouseX() <= Raylib.GetScreenWidth() / 2 + 140 && Raylib.GetMouseY() >= 350 && Raylib.GetMouseY() <= 450)
         {
-            playColor = Color.DARKBLUE;
+            vars.playColor = Color.DARKBLUE;
 
             //Laddar in spelet om man klickar på "start" knappen
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
-                begin = true;
-                menu = false;
+                vars.begin = true;
+                vars.menu = false;
                 return;
             }
         } else
         {
-            playColor = Color.BLUE;
+            vars.playColor = Color.BLUE;
         }
 
         if (Raylib.GetMouseX() >= Raylib.GetScreenWidth() / 2 - 160 && Raylib.GetMouseX() <= Raylib.GetScreenWidth() / 2 + 140 && Raylib.GetMouseY() >= 500 && Raylib.GetMouseY() <= 600)
         {
-            exitColor = Color.DARKBLUE;
+            vars.exitColor = Color.DARKBLUE;
 
             // Stänger ner spelet om man trycker på "exit knappen"
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
@@ -72,7 +69,7 @@ void MainMenu()
         }
         else
         {
-            exitColor = Color.BLUE;
+            vars.exitColor = Color.BLUE;
         }
     }
 

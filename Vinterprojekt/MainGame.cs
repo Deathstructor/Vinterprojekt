@@ -111,10 +111,11 @@ public class Game
             {
                 ballSpeedY *= -1;
             }
-            if (ballPosY <= Raylib.GetScreenHeight() + 15)
+            if (ballPosY >= Raylib.GetScreenHeight() + 15)
             {
                 start = false;
-                end = true;
+                vars.end = true;
+                return;
             }
 
             // Får bollen att röra på sig
