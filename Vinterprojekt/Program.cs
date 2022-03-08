@@ -4,32 +4,38 @@
 Raylib.InitWindow(1280, 720, "Breakout");
 Raylib.SetTargetFPS(60);
 
+bool quit = false;
+
 // Laddar in menyn eller spelet beroende på vilken bool som är sann / falsk.
-if(vars.menu)
-{
-    MainMenu();
-}
-if(vars.begin)
-{
-    Game.RunGame();
-}
-if (vars.end)
-{
-    GameOver.GameEnd();
+while(quit == false){
+    if(vars.menu)
+    {
+        MainMenu();
+    }
+    if(vars.gameStart)
+    {
+        Game.RunGame();
+    }
+    if (vars.end)
+    {
+        GameOver.GameEnd();
+    }
 }
 
-void MainMenu() 
+void MainMenu()
 {
     //Knapparna
     Rectangle play = new Rectangle(Raylib.GetScreenWidth() / 2 - 160,  350, 300, 100);
     Rectangle exit = new Rectangle(Raylib.GetScreenWidth() / 2 - 160, 500, 300, 100);
 
-    while(!Raylib.WindowShouldClose())
+    while(!Raylib.WindowShouldClose() && quit == false)
     {
         Raylib.BeginDrawing();
 
         Raylib.ClearBackground(Color.BLACK);
         Raylib.DrawText("Breakout", Raylib.GetScreenWidth() / 2 - 240, 150, 100, Color.GREEN);
+
+        Raylib.DrawText("Alpha " + vars.version, 30, Raylib.GetScreenHeight() - 50, 30, Color.WHITE);
 
         Raylib.DrawRectangleRec(play, vars.playColor);
         Raylib.DrawText("Start", Raylib.GetScreenWidth() / 2 - 80, 375, 50, Color.WHITE);
@@ -47,7 +53,7 @@ void MainMenu()
             //Laddar in spelet om man klickar på "start" knappen
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
-                vars.begin = true;
+                vars.gameStart = true;
                 vars.menu = false;
                 return;
             }
@@ -63,7 +69,8 @@ void MainMenu()
             // Stänger ner spelet om man trycker på "exit knappen"
             if (Raylib.IsMouseButtonPressed(MouseButton.MOUSE_LEFT_BUTTON))
             {
-                Raylib.CloseWindow();
+                quit = true;
+                System.Console.WriteLine(quit);
                 return;
             }
         }
@@ -72,5 +79,4 @@ void MainMenu()
             vars.exitColor = Color.BLUE;
         }
     }
-
 }

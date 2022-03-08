@@ -14,11 +14,6 @@ public class Game
         Random rdm = new Random(); // Slumpgenerator
         Block[,] b = new Block[17, 10];
 
-        // Vector2 position;
-        // Vector2 movement;
-
-        // position += movement;
-
 
 
         for (var i = 0; i < b.GetLength(0); i++)
@@ -113,7 +108,7 @@ public class Game
             }
             if (ballPosY >= Raylib.GetScreenHeight() + 15)
             {
-                start = false;
+                vars.gameStart = false;
                 vars.end = true;
                 return;
             }
