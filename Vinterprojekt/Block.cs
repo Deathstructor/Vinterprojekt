@@ -9,6 +9,7 @@ public class Block
     int h = 30;
     bool exist = true;
 
+    // Blockets position och dimensioner
     Rectangle rectangle;
 
     public Block(int x_, int y_)
@@ -18,6 +19,7 @@ public class Block
         y = y_;
     }
 
+    // Kollar om blocket borde visas eller inte
     public void Display()
     {
         if (exist)
@@ -26,13 +28,16 @@ public class Block
         }
     }
 
+    // Kollar kollisionen mellan bollen och blocken
     public int Collision(int ballX, int ballY, int ballSize)
     {
-        if (!exist) return 0;
+        if (!exist) return 0; // Säger att inget bör hända om blocket inte existerar
 
         if (Raylib.CheckCollisionCircleRec(new Vector2(ballX, ballY), ballSize, rectangle))
         {
             exist = false;
+
+            // Kollar om kollisionen sker på en rad (horisontellt) eller en kollumn (vertikalt)
             if (ballX < rectangle.x || ballX > rectangle.x + rectangle.width)
             {
                 return -1;

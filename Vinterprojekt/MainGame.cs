@@ -12,10 +12,10 @@ public class Game
         float ballSpeedX = 4, ballSpeedY = -4;  // Bollens hastighet och riktning
         bool start = false; // Bool som säger att spelet har startat - används för att inte loopa en if sats
         Random rdm = new Random(); // Slumpgenerator
-        Block[,] b = new Block[17, 10];
+        Block[,] b = new Block[17, 10]; // Skapar en grid för blocken
 
 
-
+        // Skapar blocken
         for (var i = 0; i < b.GetLength(0); i++)
         {
             for (var j = 0; j < b.GetLength(1); j++)
@@ -50,6 +50,7 @@ public class Game
 
             bool hasBouncedH = false;
             bool hasBouncedV = false;
+            
             // Kollar om bollen kolliderar med blocken
             for (var i = 0; i < b.GetLength(0); i++)
             {
